@@ -21,7 +21,7 @@ dependencies = [
 		# https://pypi.org/project/pylodstorage/
 		'pylodstorage>=0.4.9',
 		# https://github.com/pyparsing/pyparsing
-		pyparsing>=3.0.9
+		'pyparsing>=3.0.9'
      ]
 requires-python = ">=3.8"
 classifiers=[
