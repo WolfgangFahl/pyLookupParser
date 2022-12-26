@@ -119,8 +119,19 @@ class EnumCategory(Category):
                 value=token['value'] if 'value' in token else tokenKey 
                 self.lookupByKey[tokenKey]=value
     
-    def checkMatch(self,word):
-        return self.lookup(word) is not None
+    def checkMatch(self,word:str)->bool:
+        """
+        check that the given word matches
+        
+        Args:
+            word(str): the word to match
+        
+        Returns:
+            bool: True if there is a lookup entry for the word
+        """
+        lookup_result= self.lookup(word)
+        result=lookup_result is not None
+        return result
     
     def lookup(self,word):
         '''
