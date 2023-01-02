@@ -8,7 +8,6 @@ from plp.eventrefparser import EventReferenceParser
 from plp.eventsignature import EventSignature
 from plp.acronym import Acronym
 from lodstorage.sql import EntityInfo
-from debugpy._vendored.pydevd.pydevd_attach_to_process.winappdbg.win32.defines import FALSE
 
 class TestTrueAcronyms(BaseTest):
     """
