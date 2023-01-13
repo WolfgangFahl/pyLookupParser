@@ -18,6 +18,19 @@ class Acronym:
         "An acronym is a word or name formed from the initial components of a longer name or phrase. Acronyms are usually formed from the initial letters of words, as in NATO (North Atlantic Treaty Organization), but sometimes use syllables, as in Benelux (short for Belgium, the Netherlands, and Luxembourg). They can also be a mixture, as in radar (Radio Detection And Ranging). "
     
     """
+    
+    def __init__(self,acronym:str,title:str):
+        """
+        constructor
+        
+        Args:
+            acronym(str): the acronym 
+            text(str): the full title
+        """
+        self.acronym=acronym
+        self.lookupAcronym=Acronym.remove_year(acronym)
+        self.title=title
+        self.expanded=Acronym.expand_acronym(self.lookupAcronym, title)
 
     @classmethod
     def expand_acronym(cls,acronym:str,text:str)->str:
@@ -57,3 +70,19 @@ class Acronym:
                 else:
                     current_index+=1
         return None
+    
+    @classmethod
+    def remove_year(cls,acronym:str)->str:
+        """
+        remove the year part of an acronym (if any)
+        
+        Args:
+            acronym(str): the acronym to work on e.g. "MBT 2015"
+            
+        Returns:
+            str: the shortened version e.g. "MBT"
+        """
+        if not acronym:
+            return acronym
+        result=re.sub(r"(16|17|18|19|20)\d{2}","",acronym)
+        return result.strip()

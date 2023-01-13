@@ -19,6 +19,7 @@ class TestTrueAcronyms(BaseTest):
         test the expansion of acronyms
         """
         test_records=[
+            ("ICLR 2015","International Conference on Learning Representations 2015","International Conference Learning Representations"),
             ("NATO","The North Atlantic Treaty Organization is ","North Atlantic Treaty Organization"),
             ("FBI","Where is the Federal Bureau of Investigation","Federal Bureau Investigation"),
             ("ISWC","The 1st International Semantic Web Conference took place in Italy","International Semantic Web Conference"),
@@ -26,8 +27,8 @@ class TestTrueAcronyms(BaseTest):
             ("NAA","NAA is not the acronym for Not an Acronym since an is lowercase",None)
         ]
         for acronym,text,expected in test_records:
-            expanded_acronym=Acronym.expand_acronym(acronym, text)
-            self.assertEqual(expected,expanded_acronym)
+            acronym=Acronym(acronym=acronym,title=text)
+            self.assertEqual(expected,acronym.expanded)
     
     def testTrueAcronyms(self):
         """
@@ -45,18 +46,17 @@ class TestTrueAcronyms(BaseTest):
             print(f"found {len(event_records)} events")
         counter=0
         for index,event_record in enumerate(event_records):
-            title=event_record["title"]
-            acronym=event_record["acronym"]
-            expanded=Acronym.expand_acronym(acronym, title)
-            if expanded is not None:
+            acronym=Acronym(acronym=event_record["acronym"],title=event_record["title"])
+            if acronym.expanded is not None:
                 counter+=1
                 if debug and verbose:
-                    print(f"{acronym}:{expanded}")
-                event_record["expanded_acronym"]=expanded
+                    print(f"{acronym.acronym}:{acronym.expanded}")
+                event_record["expandedAcronym"]=acronym.expanded
+                event_record["lookupAcronym"]=acronym.lookupAcronym
                 acronym_records.append(event_record)
             if (index+1)%10000==0 and debug:
                 print(f"{index+1:6}:{counter:6} {counter/(index+1)*100:5.1f}%")
-        withStore=False
+        withStore=True
         if withStore:
             entityInfo=signatureDB.createTable(acronym_records,entityName="event_w_acronym",primaryKey='eventId',withDrop=True)
             signatureDB.store(acronym_records,entityInfo,executeMany=True,fixNone=True,replace=True)
