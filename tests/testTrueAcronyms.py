@@ -4,10 +4,8 @@ Created on 2023-01-01
 @author: wf
 '''
 from tests.basetest import BaseTest
-from plp.eventrefparser import EventReferenceParser
 from plp.eventsignature import EventSignature
 from plp.acronym import Acronym
-from lodstorage.sql import EntityInfo
 
 class TestTrueAcronyms(BaseTest):
     """
